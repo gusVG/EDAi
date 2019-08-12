@@ -7,8 +7,7 @@ typedef unsigned char booleano;
 int main()
 {
     booleano mio = FALSE;
-    printf( mio ? "si\n" : "no\n" );
-    printf( "%d", sizeof(byte) );
+    printf( mio ? "si" : "no" );
 
     return 0;
 }
