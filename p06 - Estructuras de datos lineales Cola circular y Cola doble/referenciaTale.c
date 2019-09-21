@@ -1,5 +1,5 @@
 /**
- * \mainpage Referencia Tale, una guia
+ * \mainpage Referencia tail, una guia
  * \author Gustavo Vergara Gonzaga para EDAi - FI - UNAM
  * \date Septiembre-2019
  * Programa que muestra una manera de como podria estar *
