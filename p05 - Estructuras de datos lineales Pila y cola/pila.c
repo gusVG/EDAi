@@ -17,7 +17,6 @@
  * @brief Estructura que servira como elemento para la pila
  * @param id Identificador del nodo
  * @param nombre Cadena como segundo miembro de nodo
- * @return Una nueva matriz C = AxB.
  */
 typedef struct{
     int id;
