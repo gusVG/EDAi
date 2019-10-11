@@ -33,7 +33,8 @@ int main () {
         mueve = mueve->siguiente;
     }
 
-    free(mueve);
+    free(head->siguiente->siguiente);
+	free(head->siguiente);
     free(head);
 
     return 0;
