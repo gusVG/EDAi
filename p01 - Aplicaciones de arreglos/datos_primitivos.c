@@ -4,12 +4,12 @@
 int main() { 
     char cadena1[] = "cadena";
     char cadena2[] = { 'c', 'a', 'd', 'e', 'n', 'a' };
-    printf("Char = %d\n", sizeof( char ) );
-    printf("Int = %d\n", sizeof( int ) );
-    printf("Float = %d\n", sizeof( float ) );
-    printf("Double = %d\n", sizeof( double ) );
+    printf("Char = %ld\n", sizeof( char ) );
+    printf("Int = %ld\n", sizeof( int ) );
+    printf("Float = %ld\n", sizeof( float ) );
+    printf("Double = %ld\n", sizeof( double ) );
     
-    printf("cadena1 = %d\n", sizeof( cadena1 ) );
-    printf("cadena2 = %d", sizeof( cadena2) );
+    printf("cadena1 = %ld\n", sizeof( cadena1 ) );
+    printf("cadena2 = %ld", sizeof( cadena2) );
     return 0; 
 }
