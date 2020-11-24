@@ -22,14 +22,14 @@ void obtenerfecha(char *);
 int aleatorio (int);
 
 int main() {
-    system("color F0");
+    // system("color F0");
     correo *head = NULL;
-    correo *aux = 0; // variable para moverse a través de los nodos
-    int keyabuscar = 5, codigo;
-    int encontro = 0, opc;
+    correo *aux = 0; // variable que almacena lo devuelto por la funcion buscar
+    int keyabuscar = 0;
+    int opc = 0;
 
     while(1){
-        system("cls");
+        system("clear"); // system("cls"); // en Windows
         printf("MENU:\t\t1. INSERTAR\t\t2. BUSCAR\t\t3.BORRAR\t\t4.Imprimir\t5.Salir");
         printf("\nOpcion: ");
         scanf("%d", &opc);
@@ -42,7 +42,8 @@ int main() {
             case 2:
                 printf("\nLlave a buscar: ");
                 scanf("%d", &keyabuscar);
-
+                
+                // "buscar" devuelve NULL si no es encontrada o la direccion del nodo si se encontro
                 aux = buscar(&head, keyabuscar);
 
                 if(aux == NULL)
@@ -50,28 +51,37 @@ int main() {
                 else {
                     printf("\n--------EL BUSCADO--------\n");
                     printf("%d. De: %s, Para: Mi\nMsj: %s\nRecibido el %s\n", aux->key, aux->remitente, aux->contenido, aux->fecha);
+                    
+                    printf("\n------(prev)------\n");
                     if(aux->prev != NULL) {
-                        printf("\n------(prev)------\n");
                         printf("%d. Remitente: %s\nContenido: %s\nCon fecha del %s\n",
                             aux->prev->key, aux->prev->remitente, aux->prev->contenido, aux->prev->fecha);
                     }
+                    else // Si "prev" del nodo encontrado es el primero
+                        printf("Es inicio de lista, no hay previo\n");
+                    
+                    printf("\n------(next)------\n");
                     if(aux->next != NULL) {
-                        printf("\n------(next)------\n");
                         printf("%d. Remitente: %s\nContenido: %s\nCon fecha del %s\n",
                             aux->next->key, aux->next->remitente, aux->next->contenido, aux->next->fecha);
                     }
+                    else // Si "next" del nodo encontrado es el ultimo
+                        printf("Es fin de lista, no hay siguiente\n");
                 }
 
-                getch();
+                getchar(); getchar();
             break;
             case 3:
                 printf("\nLlave a eliminar: ");
                 scanf("%d", &keyabuscar);
+                
+                // "buscar" devuelve NULL si no es encontrada o la direccion del nodo si se encontro
                 aux = buscar(&head, keyabuscar);
 
                 if(aux == NULL)
                     printf("\nLlave %d no encontrada, no se ha borrado nada\n", keyabuscar);
                 else {
+                    // se envia head y la direccion del nodo encontrado
                     borrar(&head, aux);
                     printf("\nLlave %d encontrada, se ha borrado el elemento\n", keyabuscar);
                 }
@@ -85,7 +95,7 @@ int main() {
             break;
             default:
                 printf("\nOpcion invalida");
-                getch();
+                getchar(); getchar();
             break;
         }
     }
@@ -108,13 +118,14 @@ void insertar(correo **apuhead) {
     strcpy(nuevo -> remitente, quienenvia[aleatorio(14)]); // uso de funcion aleatorio
     obtenerfecha( nuevo -> fecha );
     nuevo -> prev = NULL; // La referencia "prev" del nodo creado apunta a NULL
-    nuevo -> next = *apuhead; // La referencia "next" del nodo creado apunta a lo que está apuntando head
+    nuevo -> next = *apuhead; // La referencia "next" del nodo creado apunta a lo que estÃ¡ apuntando head
 
-    // Si no esta vacia la referencia "prev" de lo que está apuntando head apuntara al nodo creado
+    // Si no esta vacia la referencia "prev" de lo que estÃ¡ apuntando head apuntara al nodo creado
     if(!estavacia(*apuhead))
         (*apuhead) -> prev = nuevo;
-
-    (*apuhead) = nuevo; // Head apunta el nuevo nodo
+        
+    // head debe apuntar al nuevo nodo
+    (*apuhead) = nuevo;
 
     llave++;
 }
@@ -136,17 +147,23 @@ correo * buscar(correo ** apuhead, int keyabuscar) {
 }
 
 void borrar(correo ** apuhead, correo *aborrar) {
+    /* Si el elemento a borrar es el mismo que el que apunta head
+    entonces, al borrar head debe apuntar al next del elemento a borrar.*/
     if(aborrar == *apuhead) {
         *apuhead = aborrar->next;
+    /* De lo contrario, si el elemento a borrar no es el mismo que el que apunta head,
+    el previo del elemento a borrar en su miembro next apuntara a lo que apunta el next del elemento a borrar */
     } else {
         (aborrar->prev)->next = aborrar->next;
     }
-
+    
+    /* Si el siguiente del elemento a borrar no es nulo, entonces,
+    este mismo nodo en su miembro previo apuntara al previo del elemento a borrar */
     if(aborrar->next != NULL) {
         (aborrar->next)->prev = aborrar->prev;
     }
 
-    free(aborrar);
+    free(aborrar); // Libera el espacio que se reservo para el nodo que ya no esta ligado.
 }
 
 int estavacia(correo *head) {
@@ -167,7 +184,7 @@ void imprimir(correo ** apuhead) {
         }
     }
 
-    getch();
+    getchar(); getchar();
 }
 
 void obtenerfecha( char * buffer ) {

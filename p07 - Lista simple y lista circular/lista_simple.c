@@ -21,7 +21,7 @@ void obtenerfecha(char *);
 int main() {
     // system("color F0");
     publicacion *head = NULL;
-    publicacion *aux = 0; // variable para moverse a través de los nodos
+    publicacion *aux = 0; // variable que almacena lo devuelto por la funcion buscar
     // "codigo" va a servir para retornar una especificacion de la operacion borrar, ver en funcion
     int keyabuscar = 0, codigo;
     int opc = 0;
