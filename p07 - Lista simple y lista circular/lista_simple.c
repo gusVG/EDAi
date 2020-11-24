@@ -19,14 +19,15 @@ void imprimir(publicacion **);
 void obtenerfecha(char *);
 
 int main() {
-    system("color F0");
+    // system("color F0");
     publicacion *head = NULL;
-    publicacion *aux = 0; // variable para moverse a través de los nodos
-    int keyabuscar = 5, codigo;
-    int encontro = 0, opc;
+    publicacion *aux = 0; // variable para moverse a travÃ©s de los nodos
+    // "codigo" va a servir para retornar una especificacion de la operacion borrar, ver en funcion
+    int keyabuscar = 0, codigo;
+    int opc = 0;
 
     while(1){
-        system("cls");
+        system("clear"); // system("cls"); // para Windows
         printf("MENU:\t\t1. INSERTAR\t\t2. BUSCAR\t\t3.BORRAR\t\t4.Imprimir\t5.Salir");
         printf("\nOpcion: ");
         scanf("%d", &opc);
@@ -39,17 +40,21 @@ int main() {
             case 2:
                 printf("\nLlave a buscar: ");
                 scanf("%d", &keyabuscar);
-
+                
+                // "buscar" devuelve NULL si no es encontrada o la direccion del nodo si se encontro
                 aux = buscar(&head, keyabuscar);
 
                 if(aux == NULL)
                     printf("\nLlave %d no encontrada", keyabuscar);
                 else {
                     printf("\nLlave encontrada con valores: %d, %s, %s", aux->key, aux->contenido, aux->fecha);
-                    // Agregar información de la publicacion al que apunta el next de este nodo
+                    if (aux->next != NULL) // Si "next" del nodo encontrado no es el ultimo
+                        printf("\nY su siguiente es: %d, %s, %s", aux->next->key, aux->next->contenido, aux->next->fecha);
+                    else
+                        printf("\nYa es fin de lista, no hay siguiente");
                 }
 
-                getch();
+                getchar(); getchar();
             break;
             case 3:
                 printf("\nLlave a eliminar: ");
@@ -74,7 +79,7 @@ int main() {
             break;
             default:
                 printf("\nOpcion invalida");
-                getch();
+                getchar(); getchar();
             break;
         }
     }
@@ -166,7 +171,7 @@ void imprimir(publicacion ** apuhead) {
         }
     }
 
-    getch();
+    getchar(); getchar();
 }
 
 // Se copia la fecha actual al miembro "fecha" del nodo creado
