@@ -2,6 +2,8 @@
 Códigos de las diapositivas
 #
 Diapositivas: [bit.ly/EDA1GVG](https://bit.ly/EDA1GVG)
+
+```mermaid
 stateDiagram  
  direction  LR  
  [*]  -->  A  
@@ -12,3 +14,4 @@ stateDiagram
  a  -->  b  
  }  
  B  -->  D
+ ```
