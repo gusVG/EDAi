@@ -9,7 +9,7 @@ direction  LR
   state branch <<choice>>
   [*] --> QueryCount
   QueryCount --> branch
-  branch --> DifferentSiteAssignations: count > 0
-  branch --> [*]: count < 1
+  branch --> DifferentSiteAssignations:count > 0
+  branch --> [*]:count < 1
   DifferentSiteAssignations --> [*]
 ```
