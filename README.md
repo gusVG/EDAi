@@ -30,7 +30,7 @@ We are using lambdas to connect and update the state in Postgres.
 stateDiagram
 direction  LR
   state branch <<choice>>
-  Start --> QueryCount
+  [*] --> QueryCount
   note left of QueryCount
     # of sites with "created" as state
   end note
@@ -39,6 +39,6 @@ direction  LR
   note right of country_assignation
     Lambda
   end note
-  branch --> End: count < 1
-  country_assignation --> End
+  branch --> [*]: count < 1
+  country_assignation --> [*]
 ```
