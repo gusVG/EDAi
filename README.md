@@ -50,7 +50,7 @@ If the coordinates of the site are correct we put `get_country_processed` as sta
 ### Dynamic Name: site_assignations_
 #### File: [site_assignations_.py](more_assignations_/site_assignations_.py)
 
-We are using lambdas to connect and update the state in Postgres.
+Next assignations tasks are AWS Lambdas functions
 
 ```mermaid
 stateDiagram
@@ -58,17 +58,38 @@ direction  LR
   state branch <<choice>>
   Start --> QueryCount
   note left of QueryCount
-    # of sites as "get_country_processed"
+    "get_country_processed"
   end note
   QueryCount --> branch
-  branch --> ageb_assignation: count > 0
+  branch --> ageb_assig: count > 0
   branch --> End: count < 1
-  ageb_assignation --> segment_assignation
-  note left of segment_assignation
-    Must have "AGEB" to process
+  ageb_assig --> segment_assig
+  note left of segment_assig
+    Must have "AGEB"
   end note
-  segment_assignation --> metro_area_assignation
-  metro_area_assignation --> End
+  segment_assig --> metro_area_assig
+  metro_area_assig --> End
 ```
 
-If the coordinates of the site are correct we put `get_country_processed` as state othersite we assing `get_country_failed`.
+As we can see each task (assignations) depends on the one before. That's why we use different states as follows:
+
+```mermaid
+flowchart LR
+    subgraph First DAG -all countries-
+	s(created) --> cF(get_country_failed)
+	s --> cP(get_country_processed)
+    end
+    subgraph Second DAG -per country-
+    cP --> aF(division_failed)
+    cP --> aP(division_processed)
+    aP --> sF(segment_failed)
+    aP --> sP(segment_processed)
+    sP --> mF(metro_area_failed)
+    sP --> mP(metro_area_processed)
+    end
+    style cF fill:#000,color:#f00,stroke:#0f0
+    style aF fill:#000,color:#f00,stroke:#0f0
+    style sF fill:#000,color:#f00,stroke:#0f0
+    style mF fill:#000,color:#f00,stroke:#0f0
+    style mP fill:#000,color:#0f0,stroke:#0f0
+```
