@@ -4,14 +4,12 @@ Códigos de las diapositivas
 Diapositivas: [bit.ly/EDA1GVG](https://bit.ly/EDA1GVG)
 
 ```mermaid
-stateDiagram  
- direction  LR  
- [*]  -->  A  
- A  -->  B  
- B  -->  C  
- state  B  {  
- direction  LR  
- a  -->  b  
- }  
- B  -->  D
- ```
+stateDiagram
+direction  LR
+  state branch <<choice>>
+  [*] --> QueryCount
+  QueryCount --> branch
+  branch --> DifferentSiteAssignations: count > 0
+  branch --> [*]: count < 1
+  DifferentSiteAssignations --> [*]
+```
