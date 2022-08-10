@@ -21,7 +21,7 @@ direction  LR
 ```
 
 ## DAG
-### get_site_country
+### Name: get_site_country
 #### File: [get_country.py](country/get_country.py)
 
 We are using lambdas to connect and update the state in Postgres.
@@ -30,15 +30,45 @@ We are using lambdas to connect and update the state in Postgres.
 stateDiagram
 direction  LR
   state branch <<choice>>
-  [*] --> QueryCount
+  Start --> QueryCount
   note left of QueryCount
-    # of sites with "created" as state
+    # of sites as "created"
   end note
   QueryCount --> branch
   branch --> country_assignation: count > 0
   note right of country_assignation
     Lambda
   end note
-  branch --> [*]: count < 1
-  country_assignation --> [*]
+  branch --> End: count < 1
+  country_assignation --> End
 ```
+
+If the coordinates of the site are correct we put `get_country_processed` as state. Otherside we assign `get_country_failed`.
+
+
+## DAG
+### Dynamic Name: site_assignations_
+#### File: [site_assignations_.py](more_assignations_/site_assignations_.py)
+
+We are using lambdas to connect and update the state in Postgres.
+
+```mermaid
+stateDiagram
+direction  LR
+  state branch <<choice>>
+  Start --> QueryCount
+  note left of QueryCount
+    # of sites as "get_country_processed"
+  end note
+  QueryCount --> branch
+  branch --> ageb_assignation: count > 0
+  branch --> End: count < 1
+  ageb_assignation --> segment_assignation
+  note left of segment_assignation
+    Must have "AGEB" to process
+  end note
+  segment_assignation --> metro_area_assignation
+  metro_area_assignation --> End
+```
+
+If the coordinates of the site are correct we put `get_country_processed` as state othersite we assing `get_country_failed`.
