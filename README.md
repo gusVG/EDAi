@@ -58,16 +58,10 @@ stateDiagram
 direction  LR
   state branch <<choice>>
   Start --> QueryCount
-  note left of QueryCount
-    "get_country_processed"
-  end note
   QueryCount --> branch
   branch --> ageb_assig: count > 0
   branch --> End: count < 1
   ageb_assig --> segment_assig
-  note left of segment_assig
-    Must have "AGEB"
-  end note
   segment_assig --> metro_area_assig
   metro_area_assig --> End
 ```
