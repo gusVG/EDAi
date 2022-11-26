@@ -89,6 +89,7 @@ flowchart LR
     style mP fill:#000,color:#0f0,stroke:#0f0
 ```
 
+```mermaid
 stateDiagram
 direction  LR
   Start --> get_subscriptions
@@ -100,4 +101,4 @@ direction  LR
     Writing on DB
   end note
   check_mbl_and_write --> End
-
+```
