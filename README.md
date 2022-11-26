@@ -89,3 +89,15 @@ flowchart LR
     style mP fill:#000,color:#0f0,stroke:#0f0
 ```
 
+stateDiagram
+direction  LR
+  Start --> get_subscriptions
+  get_subscriptions --> get_more_info_for_trips: Using XComs between all tasks
+  get_more_info_for_trips --> merge_and_get_businesses_name
+  merge_and_get_businesses_name --> get_teus_profit
+  get_teus_profit --> check_mbl_and_write
+  note right of check_mbl_and_write
+    Writing on DB
+  end note
+  check_mbl_and_write --> End
+
